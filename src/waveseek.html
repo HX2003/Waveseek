@@ -1,0 +1,171 @@
+<!doctype html>
+
+<html class="sl-theme-dark">
+  <head>
+    <meta charset="utf-8">
+    <title>Waveseek Waveform Viewer</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/dark.css" />
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="script.js"></script>
+  </head>
+  <body>
+    <template id="small-tag-template" >
+        <style>
+            #small-tag-filled {
+                border-radius: 2px;
+                width: fit-content;
+                padding-left: 4%;
+                padding-top: 0%;
+                padding-bottom: 0%;
+                padding-right: 4%;
+                background-color: #111111;
+                white-space: nowrap;
+            }
+        </style>
+        <span id="small-tag-filled"></span>
+    </template>
+    
+    <template id="quick-glance-panel-template">
+        <style>
+            :host {
+                display: block;
+                border-radius: 2px;
+                width: 10vw;
+                overflow: hidden;
+                cursor: pointer;
+            }
+
+           :host(:hover) {
+                filter: brightness(125%);
+            }
+
+            #header {
+                padding-top: 2%;
+                padding-left: 4%;
+                padding-right: 4%;
+                padding-bottom: 2%;
+                background-color: #333333;
+            }
+
+            #body {
+                padding-top: 2%;
+                padding-left: 4%;
+                padding-right: 4%;
+                padding-bottom: 2%;
+                background-color:#444444;
+            }
+        </style> 
+        <div id="header">
+            <slot name="header"></span>
+        </div>
+        <div id="body">
+            <slot name="body"></span>
+        </div>
+    </template>
+
+    <template id="channel-info-panel-template">
+        <style>
+            .selected {
+                outline: solid 1px #4486ff;
+            }
+        </style> 
+        <quick-glance-panel id="panel">
+            <small-tag id="name" slot="header"></small-tag>
+            <div id="scale-per-div-y" slot="body"></div>
+            <div id="offset-y" slot="body"></div>
+        </quick-glance-panel> 
+    </template>
+    
+    <sl-dialog label="New Project" id="new-project-dialog">
+        <form id="new-project-dialog-form">
+            <sl-input name="filename" label="Filename" placeholder="My Project" autocomplete="off" required></sl-input>
+        </form>
+
+        <sl-button form="new-project-dialog-form" type="submit" slot="footer" variant="primary">
+            Create
+        </sl-button>
+    </sl-dialog>
+
+    <sl-dialog label="Open Project from URL" id="open-project-from-url-dialog">
+        <form id="open-project-from-url-dialog-form">
+            <sl-input name="url" label="URL" placeholder="https://" autocomplete="off" required></sl-input>
+        </form>
+
+        <sl-button form="open-project-from-url-dialog-form" type="submit" slot="footer" variant="primary">
+            Open
+        </sl-button>
+    </sl-dialog>
+
+    <input type="file" id="open-project-from-file-input" accept=".waveseek" style="display: none"/>
+    <input type="file" id="add-waveform-from-siglent-csv-input" accept=".csv" style="display: none"/>
+
+    <div id="top-cont">
+        <div>
+            <sl-dropdown id="file-dropdown">
+            <sl-button slot="trigger" class="top-cont-buttons">File</sl-button>
+            <sl-menu>
+                <sl-menu-item value="new-project">New Project</sl-menu-item>
+                <sl-menu-item value="open-project-from-file">Open Project from File</sl-menu-item>
+                <sl-menu-item value="open-project-from-url">Open Project from URL</sl-menu-item>
+                <sl-menu-item value="export-project">Export Project</sl-menu-item>
+                <sl-divider></sl-divider>
+                <sl-menu-item value="add-waveform-from-siglent-csv">Add Waveform from Siglent CSV</sl-menu-item>
+            </sl-menu>
+            </sl-dropdown>
+        </div>
+        <div>
+            <div id="project-name"></div>
+        </div>
+        <div>
+            <div id="app-name">
+                <b>WaveSeek</b>
+            </div>
+        </div>
+    </div>
+    <div id="waveform-cont">
+        <div>
+            <div id="vertical-axes-scale">
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+            </div>
+            <canvas id="waveform-canvas"></canvas>
+        </div>
+        <div>
+            <div></div>
+            <div id="horizontal-axes-scale">
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+                <div><div></div></div>
+            </div>
+        </div>
+    </div>
+    <div id="bottom-cont">
+        <div id="bottom-channel-info"></div>
+        <div id="bottom-extra-info">
+            <quick-glance-panel>
+                <div slot="header">Timebase</div>
+                <div slot="body">
+                    <div id="timebase-label"></div>
+                    <div id="timebase-offset-label"></div>
+                </div>
+            </quick-glance-panel>
+        </div>
+    </div>
+  </body>
+</html>

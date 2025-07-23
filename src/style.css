@@ -1,0 +1,314 @@
+:not(:defined) {
+    visibility: hidden;
+}
+
+html {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+}
+
+body {
+    margin: 0;
+    width: 100%;
+    background-color: #111111;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    user-select: none;
+    
+    font-family: monospace, monospace;
+    font-size: 1.2vw;
+    color: #ffffff;
+}
+
+#top-cont {
+    padding-top: 0.5vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 0.5vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: 1px solid #444444;
+}
+
+#top-cont > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-items: center;
+}
+
+#app-name {
+    font-size: 1.5vw;
+    background: #4961FF;
+    background: linear-gradient(to right, #788eff 0%, #ff7572 100%);
+    background-clip: text;
+    color: transparent;
+}
+
+#waveform-cont {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    padding-top: 1vw;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-bottom: 0;
+}
+
+#waveform-cont > div {
+    width: auto;    
+    display: flex;
+    flex-direction: row;
+}
+
+#waveform-cont > div > :nth-child(1){
+    width: 6%;
+} 
+
+#waveform-cont > div > :nth-child(2){
+    width: 94%;
+} 
+
+#waveform-canvas {
+    aspect-ratio: 15/6;
+    outline: 1px solid #222222;
+}
+
+#vertical-axes-scale, #horizontal-axes-scale {
+    position: relative;
+    user-select: none;
+}
+
+#vertical-axes-scale > div, #horizontal-axes-scale > div{
+    pointer-events: none;
+}
+    
+#vertical-axes-scale {
+    cursor: ns-resize;
+}
+
+#vertical-axes-scale > div {
+    position: absolute;
+    width: 100%;
+}
+
+#vertical-axes-scale > div:nth-child(1) {
+    top: calc(100%*0/8);
+}
+
+#vertical-axes-scale > div:nth-child(2) {
+    top: calc(100%*1/8);
+}
+
+#vertical-axes-scale > div:nth-child(3) {
+    top: calc(100%*2/8);
+}
+
+#vertical-axes-scale > div:nth-child(4) {
+    top: calc(100%*3/8);
+}
+
+#vertical-axes-scale > div:nth-child(5) {
+    top: calc(100%*4/8);
+}
+
+#vertical-axes-scale > div:nth-child(6) {
+    top: calc(100%*5/8);
+}
+
+#vertical-axes-scale > div:nth-child(7) {
+    top: calc(100%*6/8);
+}
+
+#vertical-axes-scale > div:nth-child(8) {
+    top: calc(100%*7/8);
+}
+
+#vertical-axes-scale > div:nth-child(9) {
+    top: calc(100%*8/8);
+}
+
+#vertical-axes-scale > div > div {
+    text-align: right;
+    padding-right: 10%;
+}
+
+#vertical-axes-scale > div:not(:first-child, :last-child) > div {
+    transform: translateY(-50%);
+}
+
+#vertical-axes-scale > div:last-child > div {
+    transform: translateY(-100%);
+}
+
+#horizontal-axes-scale {
+    cursor: ew-resize;
+    padding-bottom: 2vw;
+}
+
+#horizontal-axes-scale > div {
+    position: absolute;
+}
+
+#horizontal-axes-scale > div:nth-child(1) {
+    left: calc(100%*0/10);
+}
+
+#horizontal-axes-scale > div:nth-child(2) {
+    left: calc(100%*1/10);
+}
+
+#horizontal-axes-scale > div:nth-child(3) {
+    left: calc(100%*2/10);
+}
+
+#horizontal-axes-scale > div:nth-child(4) {
+    left: calc(100%*3/10);
+}
+
+#horizontal-axes-scale > div:nth-child(5) {
+    left: calc(100%*4/10);
+}
+
+#horizontal-axes-scale > div:nth-child(6) {
+    left: calc(100%*5/10);
+}
+
+#horizontal-axes-scale > div:nth-child(7) {
+    left: calc(100%*6/10);
+}
+
+#horizontal-axes-scale > div:nth-child(8) {
+    left: calc(100%*7/10);
+}
+
+#horizontal-axes-scale > div:nth-child(9) {
+    left: calc(100%*8/10);
+}
+
+#horizontal-axes-scale > div:nth-child(10) {
+    left: calc(100%*9/10);
+}
+
+#horizontal-axes-scale > div:nth-child(11) {
+    left: calc(100%*10/10);
+}
+
+#vertical-axes-scale > div > div {
+    text-align: right;
+    padding-right: 10%;
+}
+
+#horizontal-axes-scale > div:not(:first-child, :last-child) > div {
+    transform: translateX(-50%);
+}
+
+#horizontal-axes-scale > div:last-child > div {
+    transform: translateX(-100%);
+}
+
+#bottom-cont {
+    display: flex;
+    flex-direction: row;
+    padding: 1vw;
+}
+
+#bottom-cont > div:first-child {
+    flex-grow: 1;
+}
+
+#bottom-channel-info, #bottom-extra-info {
+    display: flex;
+    flex-direction: row;
+    column-gap: 1vw;
+}
+
+/* ---- Shoelace Overall Theme Customization ---- */
+:root {
+    --sl-panel-background-color: #222222;
+    --sl-font-sans: monospace, monospace; /* this is a little hacky */
+
+    /* 
+        For this project,
+        we want the UI to look the same regardless of screen size,
+        so we will use vw (viewport width)
+        */
+    --border-radius-scaling: 1vw;
+    --sl-border-radius-small: calc(0.1875 * var(--border-radius-scaling));
+    --sl-border-radius-medium: calc(0.25 * var(--border-radius-scaling));
+    --sl-border-radius-large: calc(0.5 * var(--border-radius-scaling));
+    --sl-border-radius-x-large: calc(1 * var(--border-radius-scaling));
+
+    --input-height-scaling: 1vw;
+    --sl-input-height-small: calc(1.875 * var(--input-height-scaling));
+    --sl-input-height-medium: calc(2.5 * var(--input-height-scaling));
+    --sl-input-height-large: calc(3.125 * var(--input-height-scaling));
+
+    --spacing-scaling: 0.75vw;
+    --sl-spacing-3x-small: calc(0.125 * var(--spacing-scaling));
+    --sl-spacing-2x-small: calc(0.25 * var(--spacing-scaling));
+    --sl-spacing-x-small: calc(0.5 * var(--spacing-scaling));
+    --sl-spacing-small: calc(0.75 * var(--spacing-scaling));
+    --sl-spacing-medium: calc(1 * var(--spacing-scaling));
+    --sl-spacing-large: calc(1.25 * var(--spacing-scaling));
+    --sl-spacing-x-large: calc(1.75 * var(--spacing-scaling));
+    --sl-spacing-2x-large: calc(2.25 * var(--spacing-scaling));
+    --sl-spacing-3x-large: calc(3 * var(--spacing-scaling));
+    --sl-spacing-4x-large: calc(4.5 * var(--spacing-scaling));
+
+    --font-scaling: 1.2vw;
+    --sl-font-size-2x-small: calc(0.625 * var(--font-scaling));
+    --sl-font-size-x-small: calc(0.75 * var(--font-scaling));
+    --sl-font-size-small: calc(0.875 * var(--font-scaling));
+    --sl-font-size-medium: calc(1 * var(--font-scaling));
+    --sl-font-size-large: calc(1.25 * var(--font-scaling));
+    --sl-font-size-x-large: calc(1.5 * var(--font-scaling));
+    --sl-font-size-2x-large: calc(2.25 * var(--font-scaling));
+    --sl-font-size-3x-large: calc(3 * var(--font-scaling));
+    --sl-font-size-4x-large: calc(4.5 * var(--font-scaling));
+}
+
+sl-dialog {
+    --width: 50vw;
+}
+
+sl-dialog::part(panel) {
+    min-height: 50vh;
+}
+
+/* ---- Shoelace Individual Theme Customization ---- */
+.top-cont-buttons {
+    border: none;
+    color: inherit;
+    background: none;
+    cursor: pointer; 
+}
+
+.top-cont-buttons::part(base) {
+    background: none;
+    border: none;
+    border-radius: 2px;
+    padding-top: 0.25vw;
+    padding-left: 0.25vw;
+    padding-right: 0.25vw;
+    padding-bottom: 0.25vw;
+    min-height: var(--sl-input-height-small);
+    line-height: calc(var(--sl-input-height-smal) - var(--sl-input-border-width) * 2);
+}
+
+.top-cont-buttons::part(base):hover {
+    background-color: #444444;
+    color: inherit;
+}
+
+.top-cont-buttons::part(label) {
+    font-size: var(--sl-font-size-medium);
+    padding: 0px;
+}
