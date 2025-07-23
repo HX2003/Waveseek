@@ -1,5 +1,5 @@
 # Waveseek
-A waveform viewer for oscilloscope traces that can be easily embedded into any web page using an `<iframe>`.
+A GPU accelerated waveform viewer for oscilloscope traces that can be easily embedded into any web page using an `<iframe>`.
 
 ![Example](doc/example.png)
 
