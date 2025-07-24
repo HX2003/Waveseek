@@ -837,11 +837,11 @@ class Project {
     *   RIFF ('wask '
     *       CHUNK ('cfgs' (project configuration JSON)),
     *       LIST ('wavs' (list of individual waveforms),
-    *           LIST ('wave' (waveform configuration JSON),
+    *           LIST ('wave' (waveform),
     *               CHUNK ('cfgs' (waveform configuration JSON)),
     *               CHUNK ('wavd' (waveform binary data))
     *           ),
-    *           LIST ('wave' (waveform configuration JSON),
+    *           LIST ('wave' (waveform),
     *               CHUNK ('cfgs' (waveform configuration JSON)),
     *               CHUNK ('wavd' (waveform binary data))
     *           ),
