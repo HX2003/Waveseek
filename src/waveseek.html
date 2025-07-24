@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/dark.css" />
     <script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="script.js"></script>
+    <script type="module" src="script.js" defer></script>
   </head>
   <body>
     <template id="small-tag-template" >
@@ -77,6 +77,11 @@
         </quick-glance-panel> 
     </template>
     
+    <sl-alert id="gpu-unsupported-alert" variant="danger">
+        <sl-icon slot="icon" name="exclamation-octagon"></sl-icon>
+        <strong>WebGPU not supported on this browser.</strong>
+    </sl-alert>
+
     <sl-dialog label="New Project" id="new-project-dialog">
         <form id="new-project-dialog-form">
             <sl-input name="filename" label="Filename" placeholder="My Project" autocomplete="off" required></sl-input>

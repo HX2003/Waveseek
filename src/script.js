@@ -1173,15 +1173,55 @@ let canvasLogicalHeight = 0;
 let prevCanvasPhysicalWidth = 0;
 let prevCanvasPhysicalHeight = 0;
 
+// Wait for Shoelace components to load
+await Promise.allSettled([
+    customElements.whenDefined("sl-alert"),
+    customElements.whenDefined("sl-button"),
+    customElements.whenDefined("sl-dialog"),
+    customElements.whenDefined("sl-dropdown"),
+    customElements.whenDefined("sl-input"),
+    customElements.whenDefined("sl-icon"),
+    customElements.whenDefined("sl-menu"),
+    customElements.whenDefined("sl-menu-item")
+]);
+
+// The UI elements for alerts
+const gpuUnsupportedAlertElement = document.getElementById("gpu-unsupported-alert")
+
+// The UI elements for the full screen popup-dialogs
+const newProjectDialogElement = document.getElementById("new-project-dialog");
+const newProjectDialogFormElement = document.getElementById("new-project-dialog-form");
+const openProjectFromUrlDialogElement = document.getElementById("open-project-from-url-dialog");
+const openProjectFromUrlDialogFormElement = document.getElementById("open-project-from-url-dialog-form");
+
+// The UI elements from top-cont
+const projectNameElement = document.getElementById("project-name");
+const fileDropdownElement = document.getElementById("file-dropdown");
+
+const openProjectFromFileInputElement = document.getElementById("open-project-from-file-input");
+const addWaveformFromSiglentCsvInputElement = document.getElementById("add-waveform-from-siglent-csv-input");
+
+// The UI elements from waveform-cont
+const horizontalAxesScaleElement = document.getElementById("horizontal-axes-scale");
+const verticalAxesScaleElement = document.getElementById("vertical-axes-scale");
+
+// The UI elements from bottom-cont
+const timebaseLabelElement = document.getElementById("timebase-label");
+const timebaseOffsetLabelElement = document.getElementById("timebase-offset-label");
+const bottomChannelInfoElement = document.getElementById("bottom-channel-info");
+
 // ----- GPU Related Stuff -----
 if (!navigator.gpu) {
-throw new Error("WebGPU not supported on this browser.");
+    gpuUnsupportedAlertElement.toast();
+    throw new Error("WebGPU not supported on this browser.");
 }
 
 const adapter = await navigator.gpu.requestAdapter();
 if (!adapter) {
+    gpuUnsupportedAlertElement.toast();
     throw new Error("No appropriate GPUAdapter found.");
 }
+
 const gpuDevice = await adapter.requestDevice();
 
 const waveformCanvas = document.getElementById("waveform-canvas");
@@ -1397,29 +1437,6 @@ function setBasicLineInstanceParams({float32Array, index, p0_x, p0_y, p1_x, p1_y
     float32Array[index * skip + 9] = dash_gap;
 }
 
-// The UI elements for the full screen popup-dialogs
-const newProjectDialogElement = document.getElementById("new-project-dialog");
-const newProjectDialogFormElement = document.getElementById("new-project-dialog-form");
-const openProjectFromUrlDialogElement = document.getElementById("open-project-from-url-dialog");
-const openProjectFromUrlDialogFormElement = document.getElementById("open-project-from-url-dialog-form");
-
-// The UI elements from top-cont
-const projectNameElement = document.getElementById("project-name");
-const fileDropdownElement = document.getElementById("file-dropdown");
-
-const openProjectFromFileInputElement = document.getElementById("open-project-from-file-input");
-const addWaveformFromSiglentCsvInputElement = document.getElementById("add-waveform-from-siglent-csv-input");
-
-// The UI elements from waveform-cont
-const horizontalAxesScaleElement = document.getElementById("horizontal-axes-scale");
-const verticalAxesScaleElement = document.getElementById("vertical-axes-scale");
-
-
-// The UI elements from bottom-cont
-const timebaseLabelElement = document.getElementById("timebase-label");
-const timebaseOffsetLabelElement = document.getElementById("timebase-offset-label");
-const bottomChannelInfoElement = document.getElementById("bottom-channel-info");
-
 // This should only be called once
 let project = new Project();
 
@@ -1513,33 +1530,27 @@ addWaveformFromSiglentCsvInputElement.addEventListener('change', async (event) =
     
 });
 
-// Wait for controls to be defined before attaching form listeners
-await Promise.all([
-    customElements.whenDefined('sl-button'),
-    customElements.whenDefined('sl-input')
-]).then(() => {
-    newProjectDialogFormElement.addEventListener('submit', event => {
-        event.preventDefault();
-        // Create the new project
-        const data = new FormData(event.target);
-        
-        const filename = data.get("filename");
-        project.initEmpty(filename);
-        
-        newProjectDialogElement.hide()
-    });
+newProjectDialogFormElement.addEventListener('submit', event => {
+    event.preventDefault();
+    // Create the new project
+    const data = new FormData(event.target);
+    
+    const filename = data.get("filename");
+    project.initEmpty(filename);
+    
+    newProjectDialogElement.hide()
+});
 
-    openProjectFromUrlDialogFormElement.addEventListener('submit', event => {
-        event.preventDefault();
-        // Open the project from URL
-        const data = new FormData(event.target);
-        
-        const url = data.get("url");
+openProjectFromUrlDialogFormElement.addEventListener('submit', event => {
+    event.preventDefault();
+    // Open the project from URL
+    const data = new FormData(event.target);
+    
+    const url = data.get("url");
 
-        project.initFromUrl(url);
+    project.initFromUrl(url);
 
-        openProjectFromUrlDialogElement.hide()
-    });
+    openProjectFromUrlDialogElement.hide()
 });
 
 fileDropdownElement.addEventListener('sl-select', event => {
