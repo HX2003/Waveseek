@@ -25,6 +25,13 @@ To open a saved project, choose one of the following:
   - `File → Open Project from URL` to load a `.waveseek` file hosted online.
 
 ## Technical details
+### Frontend
+- The interface is built using standard **HTML**, **CSS**, and **JavaScript**, with no frameworks.
+- **[Shoelace](https://shoelace.style/)** web components are used for UI elements such as buttons, dialogs, and dropdowns. These are lightweight, accessible, and framework-agnostic.
+- The waveform viewer is rendered using custom GPU shaders via WebGPU, enabling high-performance rendering of large waveform datasets with smooth zooming and panning.
+- DOM interaction and layout management are handled manually using vanilla JavaScript.
+
+### How the project is saved
 The `.waveseek` file is based on the **RIFF** (Resource Interchange File Format) specification.
 
 Each file begins with a standard RIFF header and has the following structure:
